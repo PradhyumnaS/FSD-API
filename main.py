@@ -1392,7 +1392,8 @@ app.listen(port, () => console.log(`Server running on http://localhost:${port}`)
 
 </body>
 </html>"""
-}
+},
+
 
 }
 
@@ -1401,6 +1402,16 @@ def get_program(name: str):
     if name not in programs:
         raise HTTPException(status_code=404, detail="Program not found")
     return programs[name]
+
+@app.get("/help")
+def get_help():
+    return {
+        "message": "Use /programs/{name} to get the HTML content for a specific program.",
+        "available_programs": list(programs.keys()),
+        "syntax":"npm create vite@latest npm i 7-8",
+        "10 program":"npm init -y npm i express cors node index.js",
+        "curl": "curl https://fsd-api.onrender.com/programs/1 | jq -r '.html' > index.html && open index.html",
+    }
 
 class Prompt(BaseModel):
     prompt: str
